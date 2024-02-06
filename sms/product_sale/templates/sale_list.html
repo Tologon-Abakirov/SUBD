@@ -1,0 +1,28 @@
+{% extends 'index.html' %} {% load static %} {% block title %}Продажа
+продукций{% endblock %} {% block content %}
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Список продаж продукции</h2>
+    <a href="{% url 'sale_create' %}"
+      ><button type="button" class="btn btn-primary">Добавить</button></a
+    >
+  </div>
+  <form method="post" action="{% url 'sale_list' %}" class="form-inline mb-2">
+    {% csrf_token %} {{ form.start_date }} {{ form.end_date }}
+    <button type="submit" class="btn btn-primary">Отчёт</button>
+  </form>
+  <ul class="list-group">
+    <p>Name       Date     Quantity     Amount    Employee</p>
+    {% for sale in sales %}
+    <li class="list-group-item list-custom-item">
+      <a
+        href="{% url 'sale_detail' pk=sale.pk %}"
+        class="list-group-item list-group-item-action list-custom-a"
+        >{{ sale.Product_id}} - {{ sale.Date }} - {{sale.Quantity}} - {{sale.Amount}} - {{sale.Employee_id}}</a
+      >
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+</div>
+{% endblock %}

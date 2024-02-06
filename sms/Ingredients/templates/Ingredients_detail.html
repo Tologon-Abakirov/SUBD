@@ -1,0 +1,18 @@
+
+{% extends 'index.html' %}
+{% block title %}Ингредиенты{% endblock %}
+{% block content %}
+    <div class="list-page">
+        <div class="flex-container">
+            <h2 >Подробности о инредиенте</h2>
+            <a href="{% url 'ingredients_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+        </div>
+        <h1>{{ ingredient.Ingredients }}</h1>
+
+        <p class="detail_p">Product:</strong> {{ ingredient.Product_id }}</p>
+        <p class="detail_p">Amount:</strong> {{ ingredient.RawMaterial_id }}</p>
+        <p class="detail_p">Quantity:</strong> {{ ingredient.Quantity }}</p>
+
+
+    </div>
+{% endblock %}

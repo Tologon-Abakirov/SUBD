@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Производство продукции{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Список произодства продукций</h2>
+      <a href="{% url 'production_create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+    </div>
+    <form method="post" action="{% url 'production_list' %}" class="form-inline mb-2">
+      {% csrf_token %}
+      {{ form.start_date }}
+      {{ form.end_date }}
+      <button type="submit" class="btn btn-primary">Отчёт</button>
+  </form>
+    <ul class="list-group">
+      {% for employee in employees %}
+        <li class="list-group-item list-custom-item">
+          <a href="{% url 'production_detail' pk=employee.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ employee.Product_id }} {{employee.Date}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <p>Общее количество: {{ total_amount }}</p>
+  </div>
+{% endblock %}

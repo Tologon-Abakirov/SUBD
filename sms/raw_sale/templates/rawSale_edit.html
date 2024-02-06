@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block title %}Закупка сырья{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Изменить закупку сырья</h2>
+      <a href="{% url 'rawSale_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+    </div>
+    <form  method="post" action="{% url 'rawSale_edit' pk=employee.pk %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Сохранить</button>
+    </form>
+  </div>
+{% endblock %}

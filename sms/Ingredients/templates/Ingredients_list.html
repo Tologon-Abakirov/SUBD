@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Add ingredient{% endblock %}
+{% block content %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var productSelect = document.getElementById('id_Product_id');
+    var selectedProductId = '{{ form.instance.Product_id.id }}';
+
+    if (selectedProductId) {
+      var option = document.createElement("option");
+      option.value = selectedProductId;
+      option.text = '{{ form.instance.Product_id }}';
+      productSelect.add(option);
+      productSelect.value = selectedProductId;
+    }
+
+    productSelect.addEventListener('change', function () {
+      // При изменении выбора, автоматически отправляем форму
+      productSelect.form.submit();
+    });
+  });
+
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this Position?");
+  }
+</script>
+
+
+<div class="list-page">
+  <h2>A list of ingredients</h2>
+  <form method="post" action="{% url 'ingredients_list' %}" class="form-inline mb-2">
+    {% csrf_token %}
+    <label for="id_Product_id" class="mr-2">A list of ingredients:</label>
+    {{ form.Product_id }}
+
+    <a href="{% url 'ingredients_create' %}">
+      <button type="button" class="btn btn-success">Add</button>
+    </a>
+  </form>
+  <ul class="list-group">
+    {% for ingredient in ingredients %}
+    <li class="list-group-item list-custom-item">
+      <div class="flex-container">
+        <a href="{% url 'ingredients_detail' pk=ingredient.pk %}" class="list-group-item list-group-item-action list-custom-a">
+          {{ ingredient.RawMaterial_id }} - {{ ingredient.Quantity }}
+        </a>
+        <a href="{% url 'ingredients_edit' pk=ingredient.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'ingredients_delete' pk=ingredient.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Delete</a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

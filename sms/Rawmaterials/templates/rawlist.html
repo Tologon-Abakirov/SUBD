@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Сырьё{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Список сырья</h2>
+      <a href="{% url 'rawcreate' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+    </div>
+    <ul class="list-group">
+      {% for raw in raws %}
+      <li class="list-group-item list-custom-item">
+        <a href="{% url 'rawdetail' pk=raw.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ raw.Name }} </a>
+        <form method="post" action="{% url 'rawdelete' pk=raw.pk %}" style="display: inline;">
+          {% csrf_token %}
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

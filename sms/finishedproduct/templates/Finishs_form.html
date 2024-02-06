@@ -1,0 +1,18 @@
+
+{% extends 'index.html' %}
+
+{% block title %}Готовая продукция{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Добавить готовую продукцию</h2>
+      <a href="{% url 'Finishs_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+    </div>
+    <form method="post" action="{% url 'Finishs_create' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Создать</button>
+    </form>
+  </div>
+{% endblock %}

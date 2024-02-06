@@ -1,0 +1,39 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+}
+  
+  
+a:hover {
+  text-decoration: underline;
+}
+.list-custom-item{
+  display: flex;
+}
+.list-custom-a{
+  display: flex;
+}
+.list-page{
+  width: 1000px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.flex-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+p{
+  display: flex;
+  flex-direction: column;
+}
+.detail_p{
+  font-size: 20px;
+  margin-top: 10px;
+}

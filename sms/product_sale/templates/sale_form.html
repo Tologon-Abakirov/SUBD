@@ -1,0 +1,26 @@
+
+{% extends 'index.html' %}
+
+{% block title %}Продажа продукций{% endblock %}
+
+
+{% block content %}
+    <div class="list-page">
+        <div class="flex-container">
+            <h2 >Добавить продажу продукции</h2>
+            <a href="{% url 'sale_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+        </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="post" action="{% url 'sale_create' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Создать</button>
+        </form>
+    </div>
+{% endblock %}

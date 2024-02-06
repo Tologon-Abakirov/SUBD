@@ -1,0 +1,26 @@
+
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Должности{% endblock %}
+
+{% block content %}
+    <div class="list-page">
+        <div class="flex-container">
+            <h2 >Список должностей</h2>
+            <a href="{% url 'position_create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+        </div>
+        <ul class="list-group">
+            {% for position in positions %}
+                <li class="list-group-item list-custom-item">
+                    <a href="{% url 'position_detail' pk=position.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ position.Position }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Закупка сырья{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Список закупок сырья</h2>
+      <a href="{% url 'rawSale_create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+    </div>
+    <form method="post" action="{% url 'rawSale_list' %}" class="form-inline mb-2">
+      {% csrf_token %}
+      {{ form.start_date }}
+      {{ form.end_date }}
+      <button type="submit" class="btn btn-primary">Отчёт</button>
+  </form>
+    <ul class="list-group">
+      {% for employee in employees %}
+        <li class="list-group-item list-custom-item">
+          <a href="{% url 'rawSale_detail' pk=employee.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ employee.RawMaterial_id }} {{employee.Date}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+
+  </div>
+{% endblock %}

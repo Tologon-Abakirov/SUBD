@@ -1,0 +1,25 @@
+ {% extends 'index.html' %}
+
+  {% block title %}Ингредиенты{% endblock %}
+
+  {% block content %}
+  {% if messages %}
+    <ul class="messages">
+   {% for message in messages %}
+   <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+   {% endfor %}
+    </ul>
+ {% endif %}
+
+ <div class="list-page">
+      <div class="flex-container">
+        <h2 >Добавить ингредиент</h2>
+        <a href="{% url 'ingredients_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+      </div>
+      <form method="post" action="{% url 'ingredients_create' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Создать</button>
+      </form>
+    </div>
+  {% endblock %}

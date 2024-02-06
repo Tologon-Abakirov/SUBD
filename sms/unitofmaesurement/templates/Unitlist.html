@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Единицы измерения{% endblock %}
+
+{% block content %}
+    <div class="list-page">
+        <div class="flex-container">
+            <h2 >Список единиц измерения</h2>
+            <a href="{% url 'Unitcreate' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+        </div>
+        <ul class="list-group">
+            {% for unit in Unites %}
+                <li class="list-group-item list-custom-item">
+                    <a href="{% url 'Unitdetail' pk=unit.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ unit.Name }}</a>
+
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
