@@ -7,7 +7,7 @@ from django.db import connection
 from django.contrib import messages
 from django.http import HttpResponseServerError
 
-def list(request):    
+def list(request):
     if request.method == 'POST':
         form = ProductSaleFormFilter(request.POST)
         if form.is_valid():
@@ -48,7 +48,7 @@ def check_budget_enough(amount):
     except Exception as e:
         print(f"Error executing SQL: {e}")
         return -1
-    return -1 
+    return -1
 
 def create(request):
     if request.method == 'POST':
@@ -63,7 +63,7 @@ def create(request):
             if not is_budget_enough:
                 employee = form.save(commit=False)
                 employee.save()
-                return redirect('rawSale_detail', pk=employee.pk)
+                return redirect('rawSale_list')
             else:
                 messages.error(request, 'Бюджет недостаточен для проведения операции.')
         else:
@@ -82,7 +82,7 @@ def edit(request, pk):
         if form.is_valid():
             employee = form.save(commit=False)
             employee.save()
-            return redirect('rawSale_detail', pk=employee.pk)
+            return redirect('rawSale_list')
     else:
         form = EmployeeForm(instance=employee)
     return render(request, 'rawSale_edit.html', {'form': form, 'employee': employee})

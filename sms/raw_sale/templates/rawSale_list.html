@@ -4,25 +4,79 @@
 {% block title %}Закупка сырья{% endblock %}
 
 {% block content %}
-  <div class="list-page">
-    <div class="flex-container">
-      <h2 >Список закупок сырья</h2>
-      <a href="{% url 'rawSale_create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
-    </div>
-    <form method="post" action="{% url 'rawSale_list' %}" class="form-inline mb-2">
-      {% csrf_token %}
-      {{ form.start_date }}
-      {{ form.end_date }}
-      <button type="submit" class="btn btn-primary">Отчёт</button>
-  </form>
-    <ul class="list-group">
-      {% for employee in employees %}
-        <li class="list-group-item list-custom-item">
-          <a href="{% url 'rawSale_detail' pk=employee.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ employee.RawMaterial_id }} {{employee.Date}}</a>
-        </li>
-      {% endfor %}
-    </ul>
-    <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+<script>
+  function confirmDelete() {
+    return confirm("Вы уверены что хотите удалить?");
+  }
+</script>
+<style>
+  #rawSales {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+  }
 
+  #rawSales th, #rawSales td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  #rawSales th {
+    background-color: #6cb2eb; /* Light blue color for the header */
+    color: #fff;
+  }
+
+  #rawSales tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #rawSales tr:hover {
+    background-color: #ddd;
+    }
+
+  .action-buttons a {
+    display: inline-block;
+    margin-right: 5px;
+  }
+</style>
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Список закупок сырья</h2>
+    <a href="{% url 'rawSale_create' %}">
+      <button type="button" class="btn btn-primary">Добавить</button>
+    </a>
   </div>
+  <form method="post" action="{% url 'rawSale_list' %}" class="form-inline mb-2">
+    {% csrf_token %}
+    {{ form.start_date }}
+    {{ form.end_date }}
+    <button type="submit" class="btn btn-primary">Отчёт</button>
+  </form>
+  <table id="rawSales">
+    <tr>
+      <th>Сырье</th>
+      <th>Количество</th>
+      <th>Сумма</th>
+      <th>Дата</th>
+      <th>Сотрудник</th>
+      <th>Действия</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+      <td>{{ employee.RawMaterial_id }}</td>
+      <td>{{ employee.Quantity }}</td>
+      <td>{{ employee.Amount }}</td>
+      <td>{{ employee.Date }}</td>
+      <td>{{ employee.Employee_id }}</td>
+      <td class="action-buttons">
+        <a href="{% url 'rawSale_edit' pk=employee.pk %}" class="btn btn-dark">Изменить</a>
+        <a href="{% url 'rawSale_delete' pk=employee.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+</div>
 {% endblock %}

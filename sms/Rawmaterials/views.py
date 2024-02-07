@@ -15,7 +15,7 @@ def rawcreate(request):
         form = RawMaterialsForm(request.POST)
         if form.is_valid():
             raw = form.save()
-            return redirect('rawdetail', pk=raw.pk)
+            return redirect('rawlist')
     else:
         form = RawMaterialsForm()
     return render(request, 'rawform.html', {'form': form})
@@ -26,7 +26,7 @@ def rawedit(request, pk):
         form = RawMaterialsForm(request.POST, instance=raw)
         if form.is_valid():
             raw = form.save()
-            return redirect('rawdetail', pk=raw.pk)
+            return redirect('rawlist')
     else:
         form = RawMaterialsForm(instance=raw)
     return render(request, 'rawedit.html', {'form': form, 'raw': raw})

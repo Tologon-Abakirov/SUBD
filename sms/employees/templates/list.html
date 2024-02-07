@@ -61,8 +61,8 @@
         <td>{{ employee.Address }}</td>
 
 
-        <td><a href="{% url 'edit' pk=employee.pk %}" class="btn btn-dark">Изменить</a></td>
-        <td><a href="{% url 'delete' pk=employee.pk %}" class="btn btn-dark" onclick="return confirmDelete()">Удалить</a></td>
+        <td><a href="{% url 'edit' pk=employee.pk %}" class="btn btn-warning">Изменить</a></td>
+        <td><a href="{% url 'delete' pk=employee.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a></td>
       </tr>
 
 

@@ -4,20 +4,74 @@
 {% block title %}Сырьё{% endblock %}
 
 {% block content %}
-  <div class="list-page">
-    <div class="flex-container">
-      <h2 >Список сырья</h2>
-      <a href="{% url 'rawcreate' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
-    </div>
-    <ul class="list-group">
-      {% for raw in raws %}
-      <li class="list-group-item list-custom-item">
-        <a href="{% url 'rawdetail' pk=raw.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ raw.Name }} </a>
+<script>
+  function confirmDelete() {
+    return confirm("Вы уверены что хотите удалить?");
+  }
+</script>
+<style>
+  #rawsTable {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  #rawsTable th, #rawsTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  #rawsTable th {
+    background-color: #4285f4; /* Blue color for the header */
+    color: #fff;
+  }
+
+  #rawsTable tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  #rawsTable tr:hover {
+    background-color: #ddd;
+  }
+
+  .action-buttons a {
+    display: inline-block;
+    margin-right: 5px;
+  }
+</style>
+
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Список сырья</h2>
+    <a href="{% url 'rawcreate' %}">
+      <button type="button" class="btn btn-primary">Добавить</button>
+    </a>
+  </div>
+  <table id="rawsTable">
+    <tr>
+      <th>Название</th>
+      <th>Единица измерения</th>
+      <th>Количество</th>
+      <th>Сумма</th>
+      <th>Действия</th>
+    </tr>
+    {% for raw in raws %}
+    <tr>
+      <td><a href="{% url 'rawdetail' pk=raw.pk %}" class="list-group-item list-group-item-action list-custom-a">{{ raw.Name }}</a></td>
+      <td>{{ raw.Unit_of_measurement_id }}</td>
+      <td>{{ raw.Quantity }}</td>
+      <td>{{ raw.Amount }}</td>
+      <td class="action-buttons">
+        <a href="{% url 'rawedit' pk=raw.pk %}" class="btn btn-warning">Изменить</a>
         <form method="post" action="{% url 'rawdelete' pk=raw.pk %}" style="display: inline;">
           {% csrf_token %}
+          <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Удалить</button>
         </form>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 {% endblock %}

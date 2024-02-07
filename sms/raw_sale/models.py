@@ -12,6 +12,8 @@ class RawMaterialPurchase(models.Model):
 
     class Meta:
         db_table = 'RawMaterialPurchase'
-    
+
     def __str__(self):
         return self.RawmMterial_id
+
+
