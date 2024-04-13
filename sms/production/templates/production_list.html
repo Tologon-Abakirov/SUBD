@@ -4,6 +4,40 @@
 {% block title %}Производство продукции{% endblock %}
 
 {% block content %}
+<script>
+  function confirmDelete() {
+    return confirm("Вы уверены что хотите удалить?");
+  }
+</script>
+<style>
+  #customers {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #00bcd4;
+    color: #fff;
+  }
+</style>
+
   <div class="list-page">
     <div class="flex-container">
       <h2 >Список произодства продукций</h2>
@@ -15,13 +49,47 @@
       {{ form.end_date }}
       <button type="submit" class="btn btn-primary">Отчёт</button>
   </form>
-    <ul class="list-group">
+  <table id="customers">
+    <tr>
+      <th>Продукт</th>
+      <th>Количество</th>
+      <th>Дата</th>
+      <th>Работник</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for employee in employees %}
+    <li class="list-group-item list-custom-item d-flex align-items-center">
+      <tr>
+        <td>{{ employee.Product_id }}</td>
+        <td>{{ employee.Quantity }}</td>
+        <td>{{ employee.Date }}</td>
+        <td>{{ employee.Employee_id }}</td>
+
+        <td>
+          <a href="{% url 'production_edit' pk=employee.pk %}" class="btn btn-warning"
+            >Изменить</a
+          >
+        </td>
+        <td>
+          <a
+            href="{% url 'production_delete' pk=employee.pk %}"
+            class="btn btn-danger"
+            onclick="return confirmDelete()"
+            >Удалить</a
+          >
+        </td>
+      </tr>
+    </li>
+    {% endfor %}
+  </table>
+    {% comment %} <ul class="list-group">
       {% for employee in employees %}
         <li class="list-group-item list-custom-item">
           <a href="{% url 'production_detail' pk=employee.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ employee.Product_id }} {{employee.Date}}</a>
         </li>
       {% endfor %}
-    </ul>
+    </ul> {% endcomment %}
     <p>Общее количество: {{ total_amount }}</p>
   </div>
 {% endblock %}

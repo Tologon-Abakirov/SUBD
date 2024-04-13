@@ -12,7 +12,7 @@
         <ul class="list-group">
             {% for position in positions %}
                 <li class="list-group-item list-custom-item">
-                    <a href="{% url 'budget_detail' pk=position.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ position.Budget_Amount }}</a>
+                    <a href="{% url 'budget_edit' pk=position.pk %}" class="list-group-item list-group-item-action list-custom-a" >Сумма: {{ position.Budget_Amount }} || Процент: {{ position.Percent }} || Бонус: {{ position.Bonus }}</a>
                 </li>
             {% endfor %}
         </ul>

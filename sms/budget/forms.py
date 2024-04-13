@@ -5,4 +5,4 @@ class BudgetForm(forms.ModelForm):
 
     class Meta:
         model = Budget
-        fields = ('Budget_Amount',)
+        fields = ('Budget_Amount','Percent', 'Bonus')

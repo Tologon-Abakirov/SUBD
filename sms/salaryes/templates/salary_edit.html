@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block title %}Изменить сырьё{% endblock %}
+
+{% block content %}
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Изменить зарик</h2>
+    <a href="{% url 'salary_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+  </div>
+  <form method="post" action="{% url 'salary_edit' pk=salary.pk %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Сохранить</button>
+  </form>
+</div>
+{% endblock %}

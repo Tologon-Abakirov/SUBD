@@ -6,11 +6,6 @@ class ProductionForm(forms.ModelForm):
     class Meta:
         model = Production
         fields = ('Product_id', 'Quantity', 'Date', 'Employee_id')
-
-        widgets = {
-            'Date': forms.DateInput(attrs={'type': 'date'}),
-        }
-
         def init(self, *args, **kwargs):
             super(ProductionForm, self).init(*args, **kwargs)
             # Добавим выпадающий список для поля 'position'

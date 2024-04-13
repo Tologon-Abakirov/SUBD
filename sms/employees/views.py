@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Employees
 from .forms import EmployeeForm
-
+from budget.models import Budget
 def list(request):
     employees = Employees.objects.all()
     return render(request, 'list.html', {'employees': employees})

@@ -1,5 +1,38 @@
 {% extends 'index.html' %} {% load static %} {% block title %}Продажа
 продукций{% endblock %} {% block content %}
+<script>
+  function confirmDelete() {
+    return confirm("Вы уверены что хотите удалить?");
+  }
+</script>
+<style>
+  #customers {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #00bcd4;
+    color: #fff;
+  }
+</style>
 <div class="list-page">
   <div class="flex-container">
     <h2>Список продаж продукции</h2>
@@ -11,18 +44,62 @@
     {% csrf_token %} {{ form.start_date }} {{ form.end_date }}
     <button type="submit" class="btn btn-primary">Отчёт</button>
   </form>
+  <table id="customers">
+    <tr>
+      <th>Наименование</th>
+      <th>Количество</th>
+      <th>Сумма</th>
+      <th>Дата</th>
+      <th>Работник</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for sale in sales %}
+    <li class="list-group-item list-custom-item d-flex align-items-center">
+      {% comment %}
+      <a class="list-group-item list-group-item-action list-custom-a"
+        >{{ employee.Full_Name }} || {{ employee.Position }} || {{
+        employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a
+      >
+      {% endcomment %}
+      <tr>
+        <td>{{ sale.Product_id }}</td>
+        <td>{{ sale.Quantity }}</td>
+        <td>{{ sale.Amount }}</td>
+        <td>{{ sale.Date }}</td>
+        <td>{{ sale.Employee_id }}</td>
+
+        <td>
+          <a href="{% url 'sale_edit' pk=sale.pk %}" class="btn btn-warning"
+            >Изменить</a
+          >
+        </td>
+        <td>
+          <a
+            href="{% url 'sale_delete' pk=sale.pk %}"
+            class="btn btn-danger"
+            onclick="return confirmDelete()"
+            >Удалить</a
+          >
+        </td>
+      </tr>
+    </li>
+    {% endfor %}
+  </table>
+  {% comment %}
   <ul class="list-group">
-    <p>Name       Date     Quantity     Amount    Employee</p>
     {% for sale in sales %}
     <li class="list-group-item list-custom-item">
       <a
         href="{% url 'sale_detail' pk=sale.pk %}"
         class="list-group-item list-group-item-action list-custom-a"
-        >{{ sale.Product_id}} - {{ sale.Date }} - {{sale.Quantity}} - {{sale.Amount}} - {{sale.Employee_id}}</a
+        >{{ sale.Product_id }} - {{ sale.Date }}</a
       >
     </li>
     {% endfor %}
   </ul>
+  {% endcomment %} {% comment %}
   <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+  {% endcomment %}
 </div>
 {% endblock %}

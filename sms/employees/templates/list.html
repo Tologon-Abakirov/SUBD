@@ -16,16 +16,16 @@
     border-collapse: collapse;
     width: 100%;
   }
-
+  
   #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
   }
-
+  
   #customers tr:nth-child(even){background-color: #fff;}
-
+  
   #customers tr:hover {background-color: #ddd;}
-
+  
   #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -34,49 +34,49 @@
     color: #fff;
   }
 </style>
-<div class="list-page">
-  <div class="flex-container">
-    <h2 >Список сотрудников</h2>
-    <a href="{% url 'create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
-  </div>
-  <table id="customers">
-    <tr>
-      <th>ФИО</th>
-      <th>Должность</th>
-      <th>Зарплата</th>
-      <th>Номер телефона</th>
-      <th>Адресс</th>
-      <th></th>
-      <th></th>
-
-    </tr>
-    {% for employee in employees %}
-    <li class="list-group-item list-custom-item d-flex align-items-center">
-      {% comment %} <a class="list-group-item list-group-item-action list-custom-a" >{{ employee.Full_Name }} || {{ employee.Position }} || {{ employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a> {% endcomment %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Список сотрудников</h2>
+      <a href="{% url 'create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+    </div>
+    <table id="customers">
       <tr>
-        <td>{{ employee.Full_Name }}</td>
-        <td>{{ employee.Position }}</td>
-        <td>{{ employee.Salary }}</td>
-        <td>{{ employee.Phone }}</td>
-        <td>{{ employee.Address }}</td>
+        <th>ФИО</th>
+        <th>Должность</th>
+        <th>Зарплата</th>
+        <th>Номер телефона</th>
+        <th>Адресс</th>
+        <th></th>
+        <th></th>
 
-
-        <td><a href="{% url 'edit' pk=employee.pk %}" class="btn btn-warning">Изменить</a></td>
-        <td><a href="{% url 'delete' pk=employee.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a></td>
       </tr>
+      {% for employee in employees %}
+        <li class="list-group-item list-custom-item d-flex align-items-center">
+          {% comment %} <a class="list-group-item list-group-item-action list-custom-a" >{{ employee.Full_Name }} || {{ employee.Position }} || {{ employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a> {% endcomment %}
+          <tr>
+            <td>{{ employee.Full_Name }}</td>
+            <td>{{ employee.Position }}</td>
+            <td>{{ employee.Salary }}</td>
+            <td>{{ employee.Phone }}</td>
+            <td>{{ employee.Address }}</td>
 
 
-    </li>
-    {% endfor %}
-  </table>
-  {% comment %} <ul class="list-group">
-  {% for employee in employees %}
-  <li class="list-group-item list-custom-item d-flex align-items-center">
-    <a class="list-group-item list-group-item-action list-custom-a" >{{ employee.Full_Name }} || {{ employee.Position }} || {{ employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a>
-    <a href="{% url 'edit' pk=employee.pk %}" class="btn btn-dark">Изменить</a>
-    <a href="{% url 'delete' pk=employee.pk %}" class="btn btn-dark" onclick="return confirmDelete()">Удалить</a>
-  </li>
-  {% endfor %}
-</ul> {% endcomment %}
-</div>
+            <td><a href="{% url 'edit' pk=employee.pk %}" class="btn btn-dark">Изменить</a></td>
+            <td><a href="{% url 'delete' pk=employee.pk %}" class="btn btn-dark" onclick="return confirmDelete()">Удалить</a></td>
+          </tr>
+          
+          
+        </li>
+      {% endfor %}
+    </table>
+    {% comment %} <ul class="list-group">
+      {% for employee in employees %}
+        <li class="list-group-item list-custom-item d-flex align-items-center">
+          <a class="list-group-item list-group-item-action list-custom-a" >{{ employee.Full_Name }} || {{ employee.Position }} || {{ employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a>
+          <a href="{% url 'edit' pk=employee.pk %}" class="btn btn-dark">Изменить</a>
+          <a href="{% url 'delete' pk=employee.pk %}" class="btn btn-dark" onclick="return confirmDelete()">Удалить</a>
+        </li>
+      {% endfor %}
+    </ul> {% endcomment %}
+  </div>
 {% endblock %}

@@ -9,10 +9,6 @@ class EmployeeForm(forms.ModelForm):
         model = RawMaterialPurchase
         fields = ('RawMaterial_id', 'Quantity', 'Amount', 'Date', 'Employee_id')
 
-        widgets = {
-            'Date': forms.DateInput(attrs={'type': 'date'}),
-        }
-
         def __init__(self, *args, **kwargs):
             super(EmployeeForm, self).__init__(*args, **kwargs)
             # Добавим выпадающий список для поля 'position'

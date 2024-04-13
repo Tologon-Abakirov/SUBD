@@ -1,0 +1,160 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Зарплаты{% endblock %}
+{% block content %}
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const yearSelect = document.querySelector('select[name="year"]');
+    const monthSelect = document.querySelector('select[name="month"]');
+    const selectedYearInput = document.getElementById('selected_year');
+    const selectedMonthInput = document.getElementById('selected_month');
+
+    function filterSalaryList() {
+      selectedYearInput.value = yearSelect.value;
+      selectedMonthInput.value = monthSelect.value;
+      const form = this.closest('form');
+      form.submit();
+    }
+
+    yearSelect.addEventListener('change', filterSalaryList);
+    monthSelect.addEventListener('change', filterSalaryList);
+
+    const selectedYear = localStorage.getItem('selectedYear');
+    const selectedMonth = localStorage.getItem('selectedMonth');
+
+    if (selectedYear) {
+      yearSelect.value = selectedYear;
+      selectedYearInput.value = selectedYear;
+    }
+    if (selectedMonth) {
+      monthSelect.value = selectedMonth;
+      selectedMonthInput.value = selectedMonth;
+    }
+
+    yearSelect.addEventListener('change', function() {
+      localStorage.setItem('selectedYear', yearSelect.value);
+    });
+    monthSelect.addEventListener('change', function() {
+      localStorage.setItem('selectedMonth', monthSelect.value);
+    });
+  });
+</script>
+
+<style>
+  #salaries {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #salaries td, #salaries th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #salaries tr:nth-child(even){background-color: #fff;}
+
+  #salaries tr:hover {background-color: #ddd;}
+
+  #salaries th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #00bcd4;
+    color: #fff;
+  }
+</style>
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Список зарплат</h2>
+  </div>
+  <form method="GET" action="{% url 'salary_list' %}">
+    <select name="year">
+      <option value="">Выберите год</option>
+      <option value="2020" {% if '2020' == selected_year %} selected {% endif %}>2020</option>
+      <option value="2021" {% if '2021' == selected_year %} selected {% endif %}>2021</option>
+      <option value="2022" {% if '2022' == selected_year %} selected {% endif %}>2022</option>
+      <option value="2023" {% if '2023' == selected_year %} selected {% endif %}>2023</option>
+      <option value="2024" {% if '2024' == selected_year %} selected {% endif %}>2024</option>
+      <option value="2025" {% if '2025' == selected_year %} selected {% endif %}>2025</option>
+      <option value="2026" {% if '2026' == selected_year %} selected {% endif %}>2026</option>
+      <option value="2027" {% if '2027' == selected_year %} selected {% endif %}>2027</option>
+      <option value="2028" {% if '2028' == selected_year %} selected {% endif %}>2028</option>
+      <option value="2029" {% if '2029' == selected_year %} selected {% endif %}>2029</option>
+      <option value="2030" {% if '2030' == selected_year %} selected {% endif %}>2030</option>
+    </select>
+
+    <select name="month">
+      <option value="">Выберите месяц</option>
+      <option value="1" {% if '1'|add:0 == current_month %} selected {% endif %}>Январь</option>
+      <option value="2" {% if '2'|add:0 == current_month %} selected {% endif %}>Февраль</option>
+      <option value="3" {% if '3'|add:0 == current_month %} selected {% endif %}>Март</option>
+      <option value="4" {% if '4'|add:0 == current_month %} selected {% endif %}>Апрель</option>
+      <option value="5" {% if '5'|add:0 == current_month %} selected {% endif %}>Май</option>
+      <option value="6" {% if '6'|add:0 == current_month %} selected {% endif %}>Июнь</option>
+      <option value="7" {% if '7'|add:0 == current_month %} selected {% endif %}>Июль</option>
+      <option value="8" {% if '8'|add:0 == current_month %} selected {% endif %}>Август</option>
+      <option value="9" {% if '9'|add:0 == current_month %} selected {% endif %}>Сентябрь</option>
+      <option value="10" {% if '10'|add:0 == current_month %} selected {% endif %}>Октябрь</option>
+      <option value="11" {% if '11'|add:0 == current_month %} selected {% endif %}>Ноябрь</option>
+      <option value="12" {% if '12'|add:0 == current_month %} selected {% endif %}>Декабрь</option>
+    </select>
+  </form>
+  <table id="salaries">
+    <tr>
+      <th>Сотрудник</th>
+      <th>Количество закупок</th>
+      <th>Количество производств</th>
+      <th>Количество продаж</th>
+      <th>Сумма всех действий</th>
+      <th>Оклад</th>
+      <th>Бонус</th>
+      <th>Общая сумма</th>
+      <th>Выдано</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for salary in salaryes %}
+    <tr>
+      <td>{{ salary.Employee }}</td>
+      <td>{{ salary.Number_of_purchases }}</td>
+      <td>{{ salary.Number_of_productions }}</td>
+      <td>{{ salary.Number_of_sales }}</td>
+      <td>{{ salary.Common }}</td>
+      <td>{{ salary.Salary }}</td>
+      <td>{{ salary.Bonus }}</td>
+      <td>{{ salary.General }}</td>
+      <td>{{ salary.Given }}</td>
+      {% if not salary.Given %}
+      <td><a href="{% url 'salary_edit' pk=salary.pk %}" class="btn btn-warning">Изменить</a></td>
+      <td><a href="{% url 'update_salary_given_status' pk=salary.pk %}" class="btn btn-success">Выдать</a></td>
+      {% else %}
+      <td>  -  </td>
+      <td>  -  </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+
+  <p class="mt-2 fs-4">Общая сумма: {{ total_amount }}</p>
+
+  <form method="POST" action="{% url 'issue_unissued_salaries' %}">
+    {% csrf_token %}
+    <input type="hidden" name="year" id="selected_year" value="">
+    <input type="hidden" name="month" id="selected_month" value="">
+    {% if not all_salaries_given %}
+    <button type="submit" class="btn btn-success">Выдать всем</button>
+    {% endif %}
+  </form>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'raw_sale',
     'production',
     'budget',
-    'Currency',
+    'salaryes',
+   # 'Currency',
+
 
 ]
 
@@ -108,6 +110,7 @@ MIGRATION_MODULES = {
     'unitofmaesurement':None,
     'raw_sale':None,
     'production':None,
+    'salary':None,
     'budget':None
 
 }

@@ -4,11 +4,11 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
 }
   
-  
+li{
+  list-style: none;
+}
 a:hover {
   text-decoration: underline;
 }
@@ -36,4 +36,54 @@ p{
 .detail_p{
   font-size: 20px;
   margin-top: 10px;
+}
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #fbfefd;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  padding-top: 50px;
+}
+
+.sidebar a {
+  display: block;
+  color: #212529;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #212529;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 }

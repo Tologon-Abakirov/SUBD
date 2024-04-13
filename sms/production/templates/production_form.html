@@ -9,11 +9,11 @@
       <a href="{% url 'production_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
     </div>
     {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
     <form method="post" action="{% url 'production_create' %}">
       {% csrf_token %}

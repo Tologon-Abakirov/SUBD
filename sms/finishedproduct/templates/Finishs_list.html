@@ -4,17 +4,73 @@
 {% block title %}Готовая продукция{% endblock %}
 
 {% block content %}
+<script>
+    function confirmDelete() {
+      return confirm("Вы уверены что хотите удалить?");
+    }
+</script>
+<style>
+    #customers {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #customers tr:nth-child(even){background-color: #fff;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #00bcd4;
+      color: #fff;
+    }
+</style>
     <div class="list-page">
         <div class="flex-container">
             <h2 >Список готовой продукций</h2>
             <a href="{% url 'Finishs_create' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
         </div>
-        <ul class="list-group">
+        <table id="customers">
+            <tr>
+              <th>Наименование</th>
+              <th>Единица измерения</th>
+              <th>Количество</th>
+              <th>Сумма</th>
+              <th></th>
+              <th></th>
+        
+            </tr>
+            {% for Finish in Finishs %}
+              <li class="list-group-item list-custom-item d-flex align-items-center">
+                {% comment %} <a class="list-group-item list-group-item-action list-custom-a" >{{ employee.Full_Name }} || {{ employee.Position }} || {{ employee.Salary }} || {{ employee.Address }} || {{ employee.Phone }}</a> {% endcomment %}
+                <tr>
+                  <td>{{ Finish.Name }}</td>
+                  <td>{{ Finish.Unit_of_measurement_id }}</td>
+                  <td>{{ Finish.Quantity }}</td>
+                  <td>{{ Finish.Amount }}</td>
+        
+        
+                  <td><a href="{% url 'Finishs_edit' pk=Finish.pk %}"class="btn btn-warning">Изменить</a></td>
+                  <td><a href="{% url 'Finishs_delete' pk=Finish.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a></td>
+                </tr>
+                
+                
+              </li>
+            {% endfor %}
+          </table>
+        {% comment %} <ul class="list-group">
             {% for Finish in Finishs %}
             <li class="list-group-item list-custom-item">
                 <a href="{% url 'Finishs_detail' pk=Finish.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ Finish.Name }} </a>
             </li>
             {% endfor %}
-        </ul>
+        </ul> {% endcomment %}
     </div>
 {% endblock %}

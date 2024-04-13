@@ -16,7 +16,7 @@ def create(request):
         if form.is_valid():
             position = form.save(commit=False)
             position.save()
-            return redirect('budget_detail', pk=position.pk)
+            return redirect('budget_list')
     else:
         form = BudgetForm()
     return render(request, 'budget_form.html', {'form': form})
@@ -27,7 +27,7 @@ def edit(request, pk):
         form = BudgetForm(request.POST, instance=position)
         if form.is_valid():
             position.save()
-            return redirect('budget_detail', pk=position.pk)
+            return redirect('budget_list')
     else:
         form = BudgetForm(instance=position)
     return render(request, 'budget_edit.html', {'form': form, 'position': position})

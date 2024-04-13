@@ -10,68 +10,69 @@
   }
 </script>
 <style>
-  #rawsTable {
-    font-family: Arial, sans-serif;
+  #customers {
     border-collapse: collapse;
     width: 100%;
-    margin-top: 20px;
   }
-
-  #rawsTable th, #rawsTable td {
+  
+  #customers td, #customers th {
     border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+    padding: 8px;
   }
-
-  #rawsTable th {
-    background-color: #4285f4; /* Blue color for the header */
+  
+  #customers tr:nth-child(even){background-color: #fff;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #00bcd4;
     color: #fff;
   }
-
-  #rawsTable tr:nth-child(even) {
-    background-color: #fff;
-  }
-
-  #rawsTable tr:hover {
-    background-color: #ddd;
-  }
-
-  .action-buttons a {
-    display: inline-block;
-    margin-right: 5px;
-  }
 </style>
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Список сырья</h2>
+      <a href="{% url 'rawcreate' %}"><button type="button" class="btn btn-primary">Добавить</button></a>
+    </div>
+    <table id="customers">
+      <tr>
+        <th>Название</th>
+        <th>Ед. измерения</th>
+        <th>Количество</th>
+        <th>Сумма</th>
+        <th></th>
+        <th></th>
 
-<div class="list-page">
-  <div class="flex-container">
-    <h2>Список сырья</h2>
-    <a href="{% url 'rawcreate' %}">
-      <button type="button" class="btn btn-primary">Добавить</button>
-    </a>
-  </div>
-  <table id="rawsTable">
-    <tr>
-      <th>Название</th>
-      <th>Единица измерения</th>
-      <th>Количество</th>
-      <th>Сумма</th>
-      <th>Действия</th>
-    </tr>
-    {% for raw in raws %}
-    <tr>
-      <td><a href="{% url 'rawdetail' pk=raw.pk %}" class="list-group-item list-group-item-action list-custom-a">{{ raw.Name }}</a></td>
-      <td>{{ raw.Unit_of_measurement_id }}</td>
-      <td>{{ raw.Quantity }}</td>
-      <td>{{ raw.Amount }}</td>
-      <td class="action-buttons">
-        <a href="{% url 'rawedit' pk=raw.pk %}" class="btn btn-warning">Изменить</a>
+      </tr>
+      {% for raw in raws %}
+        <li class="list-group-item list-custom-item d-flex align-items-center">
+          <tr>
+            <td>{{ raw.Name }}</td>
+            <td>{{ raw.Unit_of_measurement_id }}</td>
+            <td>{{ raw.Quantity }}</td>
+            <td>{{ raw.Amount }}</td>
+
+
+            <td><a href="{% url 'rawedit' pk=raw.pk %}" class="btn btn-warning">Изменить</a></td>
+            <td><a href="{% url 'rawdelete' pk=raw.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a></td>
+          </tr>
+          
+          
+        </li>
+      {% endfor %}
+    </table>
+    {% comment %} <ul class="list-group">
+      {% for raw in raws %}
+      <li class="list-group-item list-custom-item">
+        <a href="{% url 'rawdetail' pk=raw.pk %}" class="list-group-item list-group-item-action list-custom-a" >{{ raw.Name }} </a>
         <form method="post" action="{% url 'rawdelete' pk=raw.pk %}" style="display: inline;">
           {% csrf_token %}
-          <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Удалить</button>
         </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
+      </li>
+      {% endfor %}
+    </ul> {% endcomment %}
+  </div>
 {% endblock %}
