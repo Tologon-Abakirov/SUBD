@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-
 from .models import Salary
 from .forms import SalaryForm, SalaryFormFilter
 from django.db import connection
@@ -231,8 +230,10 @@ def issue_unissued_salaries(request):
                         messages.error(request, 'Ошибка: Недостаточно средств в бюджете для выдачи зарплат')
                     else:
                         messages.error(request, 'Ошибка: Неизвестная ошибка')
+                    print('atest')
+                    print(result)
             except Exception as e:
-                messages.error(request, f'Недостаточно средств в бюджете для выдачи зарплат')
+                messages.error(request, f'Успешно')
         else:
             messages.error(request, 'Ошибка: Не выбран год или месяц')
 
