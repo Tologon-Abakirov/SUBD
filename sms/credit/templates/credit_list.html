@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Кредиты{% endblock %}
+
+{% block content %}
+<script>
+  function confirmDelete() {
+    return confirm("Вы уверены что хотите удалить?");
+  }
+</script>
+<style>
+  #credits {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #credits td, #credits th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #credits tr:nth-child(even){background-color: #fff;}
+
+  #credits tr:hover {background-color: #ddd;}
+
+  #credits th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #00bcd4;
+    color: #fff;
+  }
+</style>
+<div class="list-page">
+  <div class="flex-container">
+    <h2>Список кредитов</h2>
+    <a href="{% url 'ppayment_list' %}" class="btn btn-warning">Общая история</a>
+    <a href="{% url 'credit_create' %}"><button type="button" class="btn btn-primary">Взять кредит</button></a>
+  </div>
+  <table id="credits">
+    <tr>
+      <th>Сумма кредита</th>
+      <th>Срок (месяцы)</th>
+      <th>Годовой процент</th>
+      <th>Пени</th>
+      <th>Дата получения</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for credit in credits %}
+    <tr>
+      <td>{{ credit.loan_amount }}</td>
+      <td>{{ credit.term_months }}</td>
+      <td>{{ credit.annual_interest_rate }}</td>
+      <td>{{ credit.penalty }}</td>
+      <td>{{ credit.date_received }}</td>
+      <td><a href="{% url 'credit_paymentnow' pk=credit.pk %}" class="btn btn-success">Оплатить</a></td>
+      <td><a href="{% url 'credit_paymentnowow' pk=credit.pk %}" class="btn btn-warning">История</a></td>
+<!--      <td><a href="{% url 'credit_delete' pk=credit.pk %}" class="btn btn-danger" onclick="return confirmDelete()">Удалить</a></td>-->
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

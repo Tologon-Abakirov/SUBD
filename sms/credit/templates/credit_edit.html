@@ -1,0 +1,18 @@
+
+{% extends 'index.html' %}
+
+{% block title %}Сырьё{% endblock %}
+
+{% block content %}
+  <div class="list-page">
+    <div class="flex-container">
+      <h2 >Изменить сырьё</h2>
+      <a href="{% url 'credit_create' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+    </div>
+    <form  method="post" action="{% url 'credit_edit' pk=credit.pk %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Сохранить</button>
+    </form>
+  </div>
+{% endblock %}
