@@ -14,6 +14,10 @@ urlpatterns = [
     path('finish/',include('finishedproduct.urls')),
     path('raw_sale/',include('raw_sale.urls')),
     path('production/',include('production.urls')),
+    path('salaryes/',include('salaryes.urls')),
     path('budget/',include('budget.urls')),
-    path('salaryes/',include('salaryes.urls'))
+    path('credit/',include('credit.urls')),
+    path('creditpayment/',include('creditpayment.urls')),
+
+
 ]

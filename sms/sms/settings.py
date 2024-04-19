@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'production',
     'budget',
     'salaryes',
+    'credit',
+    'creditpayment',
    # 'Currency',
 
 
@@ -111,7 +113,9 @@ MIGRATION_MODULES = {
     'raw_sale':None,
     'production':None,
     'salary':None,
-    'budget':None
+    'budget':None,
+    'credit':None,
+    'creditpayment':None,
 
 }
 # Password validation

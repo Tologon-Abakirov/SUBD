@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Оплаты кредитов{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <input type="date" name="selected_date" id="selected-date">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var selectedDate = localStorage.getItem('selectedDate');
+        if (selectedDate) {
+            $('#selected-date').val(selectedDate);
+        }
+
+        $('#selected-date').change(function() {
+            var selectedDate = $(this).val();
+            localStorage.setItem('selectedDate', selectedDate);
+            $('form').submit();
+        });
+    });
+</script>
+
+
+<style>
+    #credit_payments {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #credit_payments td, #credit_payments th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #credit_payments tr:nth-child(even){background-color: #fff;}
+
+    #credit_payments tr:hover {background-color: #ddd;}
+
+    #credit_payments th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #00bcd4;
+        color: #fff;
+    }
+</style>
+<div class="list-page">
+    <div class="flex-container">
+        <h2>Оплата кредита</h2>
+        <a href="{% url 'credit_list' %}"><button type="button" class="btn btn-secondary">Назад</button></a>
+    </div>
+    <table id="credit_payments">
+        <tr>
+            <th>Дата оплаты</th>
+            <th>Основная сумма</th>
+            <th>Процент</th>
+            <th>Общая сумма</th>
+            <th>Просрочено дней</th>
+            <th>Пени</th>
+            <th>Итого</th>
+            <th>Остаток</th>
+            <th>Действия</th>
+
+
+        </tr>
+        {% for payment in credit_payments %}
+        <tr>
+            <td>{{ payment.payment_date }}</td>
+            <td>{{ payment.principal_amount }}</td>
+            <td>{{ payment.interest }}</td>
+            <td>{{ payment.total_amount }}</td>
+            <td>{{ payment.days_overdue }}</td>
+            <td>{{ payment.penalty }}</td>
+            <td>{{ payment.total }}</td>
+            <td>{{ payment.balance }}</td>
+            <td><a href="{% url 'update_credit_payments' pk=payment.credit_id %}?selected_date={{ selected_date }}" class="btn btn-success">Оплатить</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}
