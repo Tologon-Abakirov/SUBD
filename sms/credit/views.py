@@ -167,9 +167,9 @@ def update_credit_payments(request, pk):
             result = cursor.fetchone()[0]
             print("Result:", result)  # Печать значения result
             if result == 1:
-                messages.success(request, 'Зарплата успешно выдана')
+                messages.success(request, 'Оплачено')
             elif result == 0:
-                messages.error(request, 'Ошибка: Зарплата уже была выдана')
+                messages.error(request, 'Ошибка:Кредит за этот период оплачен')
             elif result == -1:
                 messages.error(request, 'Ошибка: Недостаточно средств в бюджете')
             else:

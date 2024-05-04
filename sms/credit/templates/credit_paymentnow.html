@@ -65,8 +65,6 @@
             <th>Итого</th>
             <th>Остаток</th>
             <th>Действия</th>
-
-
         </tr>
         {% for payment in credit_payments %}
         <tr>
@@ -77,9 +75,14 @@
             <td>{{ payment.days_overdue }}</td>
             <td>{{ payment.penalty }}</td>
             <td>{{ payment.total }}</td>
+
+            {%if payment.balance > 1 %}
             <td>{{ payment.balance }}</td>
             <td><a href="{% url 'update_credit_payments' pk=payment.credit_id %}?selected_date={{ selected_date }}" class="btn btn-success">Оплатить</a></td>
-
+            {%else%}
+            <td>{{ 0 }}</td>
+            <td> Кредит уже оплачен </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

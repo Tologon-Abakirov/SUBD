@@ -18,6 +18,7 @@ urlpatterns = [
     path('budget/',include('budget.urls')),
     path('credit/',include('credit.urls')),
     path('creditpayment/',include('creditpayment.urls')),
+    path('accounts/',include('django.contrib.auth.urls')),
 
 
 ]

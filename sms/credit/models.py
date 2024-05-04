@@ -8,7 +8,7 @@ class Credit(models.Model):
     annual_interest_rate = models.FloatField(db_column='AnnualInterestRate')
     penalty = models.FloatField(db_column='Penalty')
     date_received = models.DateField(default=datetime.date.today, db_column='DateReceived')
-
+    
     class Meta:
         db_table = 'Credit'
 
