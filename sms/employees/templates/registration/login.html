@@ -24,7 +24,7 @@
        body {
 	align-items: center;
 	background-color: var(--white);
-	background: url("../../static/img.jpg");
+	background: url("../../static/ph3.jpg");
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -109,7 +109,7 @@
 
 .overlay {
 	background-color: var(--lightblue);
-	background: url("../../static/img.jpg");
+	background: url("../../static/ph3.jpg");
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -227,6 +227,7 @@
                 <h2 class="form__title">Sign Up</h2>
                 <input type="text" placeholder="User" class="input" />
                 <input type="email" placeholder="Email" class="input" />
+                <input type="email" placeholder="Position" class="input" />
                 <input type="password" placeholder="Password" class="input" />
                 <button class="btn">Sign Up</button>
             </form>
@@ -234,7 +235,7 @@
 
         <!-- Sign In -->
         <div class="container__form container--signin">
-            <form action="#" class="form" id="form2" method="post">
+            <form action="" class="form" id="form2" method="post">
                 {% csrf_token %}
                 <h2 class="form__title">Sign In</h2>
                 <input type="email" placeholder="Email" class="input" />
